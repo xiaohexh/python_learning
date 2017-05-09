@@ -14,10 +14,12 @@
 # and highly recommend config "requirepass 'xxx'" in conf file.
 
 import redis
+import time
 
 #REDIS_HOST = '127.0.0.1'
 REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
+#REDIS_PORT = 6379 
+REDIS_PORT = 10080 # test redis proxy
 
 def read_redis():
 	#r = redis.StrictRedis(host = REDIS_HOST, port = REDIS_PORT, db = 0)
@@ -29,14 +31,19 @@ def read_redis():
 	else:
 		print "set 'foo' failed"
 
+	foo_value = r.get('foo')
+	print foo_value
+
+	time.sleep(20)
+'''
 	# get # keys
 	key_size = r.dbsize()
 	print "There're %d keys" % key_size
 
 	# iterate all the keys, only apply to all keys is str
 	keys = r.keys()
-	#for key in keys:
-	#	print key + ":" + str(r.get(key))
+	for key in keys:
+		print key + ":" + str(r.get(key))
 	
 	# delete key
 	if r.exists('foo'):
@@ -51,6 +58,7 @@ def read_redis():
 	p.execute()
 
 	print r.smembers('faz')
+'''
 
 if __name__ == '__main__':
 	read_redis()
